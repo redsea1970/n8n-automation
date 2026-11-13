@@ -1,0 +1,8 @@
+.env
+credentials.json
+node_modules/
+*.log
+.n8n/
+n8n_data/
+__pycache__/
+.DS_Store
