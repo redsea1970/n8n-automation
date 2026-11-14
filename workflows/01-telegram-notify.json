@@ -1,0 +1,61 @@
+{
+  "name": "01-telegram-notify",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a8374c1a-6fda-4d7c-bbe1-f55780213e0b",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "chatId": "5110100663",
+        "text": "Hello from n8n portfolio! Block 1 works.",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        0
+      ],
+      "id": "0f8d8356-8c1e-48e1-a69e-c7b8a1ac481d",
+      "name": "Telegram",
+      "credentials": {
+        "telegramApi": {
+          "id": "9old9UZUfLfv7vsC",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4c58eda6-2c30-4f2e-b59e-7ede91585c4d",
+  "meta": {
+    "instanceId": "ace0ce4260f0c6ec5e3d6a75bed8ace349283ede6ba91aa30ae0f6f3ee2cb8ae"
+  },
+  "id": "qD7Rpq4SORlXGgLk",
+  "tags": []
+}
