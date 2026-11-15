@@ -13,3 +13,5 @@ Client ID, Client Secret и токены хранятся в n8n Credentials. В
 
 ## Импорт
 Загрузите `workflows/02-google-sheets.json`. Создайте свой OAuth2 credential в n8n и укажите ID своей Google-таблицы.
+
+![Схема Блок 2](../screenshots/02-google-sheets.png)

@@ -13,3 +13,5 @@
 
 ## Импорт
 Загрузите файл `workflows/01-telegram-notify.json` в n8n через меню `Import from file`. Вам потребуется создать своего бота и указать свой Credential и Chat ID.
+
+![Схема Блок 1](../screenshots/01-telegram.png)

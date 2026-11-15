@@ -10,3 +10,5 @@
 
 ## Импорт
 Загрузите `workflows/03-parse-api.json`. Подключите свой Credential Google Sheets и укажите ID таблицы.
+
+![Схема Блок 3](../screenshots/03-parse-api.png)

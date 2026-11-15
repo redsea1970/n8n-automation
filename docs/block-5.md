@@ -12,3 +12,5 @@
 
 ## Импорт
 Загрузите `workflows/05-release-digest.json`. Подключите свои Credential: Google Sheets, OpenAI (опционально), Telegram.
+
+![Схема Блок 5](../screenshots/05-release-digest.png)
