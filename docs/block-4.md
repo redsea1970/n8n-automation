@@ -14,4 +14,5 @@
 ## Импорт
 Загрузите `workflows/04-ai-agent-telegram.json`. Создайте Credential Telegram и OpenAI.
 
-![Схема Блок 4](../screenshots/04-ai-agent.png)
+![Схема Блок 4](../screenshots/04-ai-agent-telegram.png)
+
