@@ -1,0 +1,231 @@
+{
+  "name": "05-release-digest",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -580,
+        -160
+      ],
+      "id": "7d6cdc00-1b91-4107-a193-df4f5ba68e9e",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://github.com/n8n-io/n8n/releases.atom",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -400,
+        -160
+      ],
+      "id": "a6632ff9-c751-4416-8bac-7a04871d90b0",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst result = [];\nfor (const item of items) {\n  const xml = item.json.data;\n  const regex = /<entry>[\\s\\S]*?<title>(.*?)<\\/title>[\\s\\S]*?<updated>(.*?)<\\/updated>/g;\n  let match;\n  let count = 0;\n  while ((match = regex.exec(xml)) !== null && count < 3) {\n    result.push({\n      json: {\n        Title: match[1],\n        Date: match[2].slice(0, 10)\n      }\n    });\n    count++;\n  }\n}\nreturn result;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        -160
+      ],
+      "id": "c16d0536-e9d1-474d-815c-65a48eba3191",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1JZ98ULfHpr6-idDE4yIWy_S62mByou3u6fMxFkiinBc/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Лист2",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Title": "{{ $json.Title }}",
+            "Date": "{{ $json.Date }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        0,
+        -160
+      ],
+      "id": "5542da9c-8511-42c4-a336-02e2700ff1a1",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3YkRGhUkpR4c8nET",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "id"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "Сделай краткое саммари (1-2 предложения) на русском по этим релизам: {{ JSON.stringify($input.all()) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.7,
+      "position": [
+        220,
+        -160
+      ],
+      "id": "166de4d3-ac97-4b89-84fa-d6696b7b9377",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "6f1pMjhDLOB8CANy",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "5110100663",
+        "text": "Новые релизы n8n: {{ $json.choices[0].message.content }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -540,
+        100
+      ],
+      "id": "ea007d0f-5700-4a24-ad8b-e486f3dd09c4",
+      "name": "Telegram",
+      "credentials": {
+        "telegramApi": {
+          "id": "9old9UZUfLfv7vsC",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "735f13a2-cc69-4fb2-9508-0d3361532554",
+  "meta": {
+    "instanceId": "ace0ce4260f0c6ec5e3d6a75bed8ace349283ede6ba91aa30ae0f6f3ee2cb8ae"
+  },
+  "id": "TZzZXordjtterVqd",
+  "tags": []
+}
