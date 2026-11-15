@@ -1,0 +1,159 @@
+{
+  "name": "My workflow 5",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -580,
+        -200
+      ],
+      "id": "2eb3afba-b7f0-4ddd-a7f8-5742c569b590",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "https://redsea1970.github.io",
+        "options": {
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -360,
+        -200
+      ],
+      "id": "50c1575e-d569-4264-a123-84fee296e2a3",
+      "name": "HTTP Request",
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3a7e0ec0-90eb-4ed2-8768-3cc4ca0d9116",
+              "leftValue": "=String\n{{ $json.statusCode }}",
+              "rightValue": "200",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "60cb0222-f86a-4eb9-995d-0d1fc077f1e3",
+              "leftValue": "=String\n{{ $json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -140,
+        -200
+      ],
+      "id": "9a325e9e-63e5-4da2-9f23-dc40bf07728d",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "5110100663",
+        "text": "=🚨 Сайт лёг! Код: {{ $json.statusCode || 'нет ответа (таймаут/ошибка)' }}\nURL: https://redsea1970.github.io\nВремя: {{ $now }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        140,
+        -240
+      ],
+      "id": "642c54a3-79b1-424c-9c6e-6e358410fcb3",
+      "name": "Telegram",
+      "credentials": {
+        "telegramApi": {
+          "id": "9old9UZUfLfv7vsC",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6a67870e-2fd2-4bf5-87f8-f9d4bfe79d17",
+  "meta": {
+    "instanceId": "ace0ce4260f0c6ec5e3d6a75bed8ace349283ede6ba91aa30ae0f6f3ee2cb8ae"
+  },
+  "id": "Xhh6b0qZsE587guZ",
+  "tags": []
+}

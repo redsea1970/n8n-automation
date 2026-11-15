@@ -28,3 +28,6 @@ docker compose up -d
 1. РћС‚РєСЂРѕР№С‚Рµ n8n в†’ Workflows в†’ Import from file.
 2. Р’С‹Р±РµСЂРёС‚Рµ РЅСѓР¶РЅС‹Р№ `.json` РёР· РїР°РїРєРё `workflows/`.
 3. РЎРѕР·РґР°Р№С‚Рµ Credentials РґР»СЏ Telegram/Google/OpenAI Рё СѓРєР°Р¶РёС‚Рµ РёС… РІ СѓР·Р»Р°С….
+
+## Блок 6: Uptime Monitor
+Проверка доступности сайта каждые 5 минут с уведомлением в Telegram при сбоях. Подробнее: [docs/block-6.md](docs/block-6.md)
