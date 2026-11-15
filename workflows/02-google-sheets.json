@@ -1,0 +1,112 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "feafd9ef-d750-425f-8894-068e65842377",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1JZ98ULfHpr6-idDE4yIWy_S62mByou3u6fMxFkiinBc",
+          "mode": "list",
+          "cachedResultName": "n8n-automation-test",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JZ98ULfHpr6-idDE4yIWy_S62mByou3u6fMxFkiinBc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JZ98ULfHpr6-idDE4yIWy_S62mByou3u6fMxFkiinBc/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "Test User",
+            "Date": "={{ $now.toFormat('yyyy-MM-dd HH:mm') }}",
+            "Status": "Success"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        220,
+        0
+      ],
+      "id": "81dca75f-0e3c-4ecc-bd30-85ac2c1fee70",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3YkRGhUkpR4c8nET",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c21f3fbe-a53d-44bf-9a9c-241f88c61516",
+  "meta": {
+    "instanceId": "ace0ce4260f0c6ec5e3d6a75bed8ace349283ede6ba91aa30ae0f6f3ee2cb8ae"
+  },
+  "id": "Me1cM5AecNcR7vR0",
+  "tags": []
+}
